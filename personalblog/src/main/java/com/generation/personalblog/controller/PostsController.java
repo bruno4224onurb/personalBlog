@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.personalblog.model.Posts;
 import com.generation.personalblog.repository.PostsRepository;
+import com.generation.personalblog.repository.ThemeRepository;
 
 import jakarta.validation.Valid;
 
@@ -33,6 +34,9 @@ public class PostsController {
 	
 	@Autowired
 	private PostsRepository postsRepository;
+	
+	@Autowired
+	private ThemeRepository themeRepository;
 	
 	@GetMapping
 	public ResponseEntity<List<Posts>> getAll(){
@@ -53,16 +57,23 @@ public class PostsController {
 	
 	@PostMapping
 	public ResponseEntity<Posts> post(@Valid @RequestBody Posts posts){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(postsRepository.save(posts));
+		if (themeRepository.existsById(posts.getTheme().getId()))
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(postsRepository.save(posts));
+		
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Theme does not exist", null);
 	}
 	
 	@PutMapping
 	public ResponseEntity<Posts> put(@Valid @RequestBody Posts posts){
-		return postsRepository.findById(posts.getId())
-				.map(response -> ResponseEntity.status(HttpStatus.OK)
-					.body(postsRepository.save(posts)))
-				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		if(postsRepository.existsById(posts.getId())) {
+			
+			if(themeRepository.existsById(posts.getTheme().getId()))
+				return ResponseEntity.status(HttpStatus.OK)
+						.body(postsRepository.save(posts));
+		}
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
