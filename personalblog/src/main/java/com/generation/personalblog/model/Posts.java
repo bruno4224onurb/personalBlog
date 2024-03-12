@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -34,6 +37,10 @@ public class Posts {
 	
 	@UpdateTimestamp
 	private LocalDateTime date;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("posts")
+	private Theme theme;
 
 	public Long getId() {
 		return id;
@@ -65,6 +72,14 @@ public class Posts {
 
 	public void setDate(LocalDateTime date) {
 		this.date = date;
+	}
+
+	public Theme getTheme() {
+		return theme;
+	}
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
 	}
 
 }
