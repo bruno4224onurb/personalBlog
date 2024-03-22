@@ -29,7 +29,7 @@ public class UserService {
 
 	public Optional<User> registerUser(User user) {
 
-		if (userRepository.findByUser(user.getUser()).isPresent())
+		if (userRepository.findByUserName(user.getUserName()).isPresent())
 			return Optional.empty();
 
 		user.setPassword(encryptPassword(user.getPassword()));
@@ -38,11 +38,11 @@ public class UserService {
 	
 	}
 
-	public Optional<User> atualizarUsuario(User user) {
+	public Optional<User> updateUsuario(User user) {
 		
 		if(userRepository.findById(user.getId()).isPresent()) {
 
-			Optional<User> searchUser = userRepository.findByUser(user.getUser());
+			Optional<User> searchUser = userRepository.findByUserName(user.getUserName());
 
 			if ( (searchUser.isPresent()) && ( searchUser.get().getId() != user.getId()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists!", null);
@@ -65,7 +65,7 @@ public class UserService {
         
 		if (authentication.isAuthenticated()) {
 			
-			Optional<User> usuario = userRepository.findByUser(userLogin.get().getUser());
+			Optional<User> usuario = userRepository.findByUserName(userLogin.get().getUser());
 			
 			if (usuario.isPresent()) {
 			   userLogin.get().setId(usuario.get().getId());
@@ -94,5 +94,6 @@ public class UserService {
 	private String generateToken(String user) {
 		return "Bearer " + jwtService.generateToken(user);
 	}
+
 
 }

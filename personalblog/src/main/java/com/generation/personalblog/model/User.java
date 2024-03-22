@@ -19,25 +19,25 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_users")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	
+
 	@NotNull(message = "The attribute name is mandatory!")
 	private String name;
-	
+
 	@NotNull(message = "The attribute user is mandatory!")
 	@Email(message = "The attribute user must be a valid email!")
-	private String user;
-	
+	private String userName;
+
 	@NotNull(message = "The attribute password is mandatory!")
 	@Size(min = 8, message = "The password must have at least 8 characters.")
 	private String password;
-	
+
 	@Size(max = 5000, message = "The url of the photo must be less than 5000 characters.")
 	private String userPhoto;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("user")
 	private List<Posts> posts;
@@ -58,12 +58,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.userName = user;
 	}
 
 	public String getPassword() {
@@ -88,6 +88,17 @@ public class User {
 
 	public void setPost(List<Posts> posts) {
 		this.posts = posts;
+	}
+
+	public User(Long id, String name, String user, String password, String userPhoto) {
+		this.Id = id;
+		this.name = name;
+		this.userName = user;
+		this.password = password;
+		this.userPhoto = userPhoto;
+	}
+
+	public User() {
 	}
 
 }
