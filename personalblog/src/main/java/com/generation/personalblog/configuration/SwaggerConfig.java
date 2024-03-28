@@ -20,11 +20,11 @@ public class SwaggerConfig {
 		return new OpenAPI()
 				.info(new Info().title("Personal Blog Project").description("Personal Blog Project - Generation Brazil")
 						.version("v0.0.1")
-						.license(new License().name("Generation Brazil").url("httops://brazil.generation.org"))
-						.contact(new Contact().name("Generation Brazil").url("hhtps://github.com/conteudoGeneration")
-								.email("conteudogeneration@generation.org")))
+						.license(new License().name("Generation Brazil").url("https://brazil.generation.org"))
+						.contact(new Contact().name("Bruno S. Franchi").url("https://github.com/bruno4224onurb")
+								.email("brunos.franchi@hotmail.com")))
 				.externalDocs(new ExternalDocumentation().description("Github")
-						.url("https://github.com/conteudoGeneration/"));
+						.url("https://github.com/bruno4224onurb"));
 	}
 
 	@Bean
@@ -34,7 +34,7 @@ public class SwaggerConfig {
 
 				ApiResponses apiResponses = operation.getResponses();
 
-				apiResponses.addApiResponse("200", createApiResponse("Sucesso!"));
+				apiResponses.addApiResponse("200", createApiResponse("Success!"));
 				apiResponses.addApiResponse("201", createApiResponse("Object Persisted!"));
 				apiResponses.addApiResponse("204", createApiResponse("Object Excluded!"));
 				apiResponses.addApiResponse("400", createApiResponse("Error in the request!"));
