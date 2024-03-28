@@ -41,6 +41,10 @@ public class Posts {
 	@ManyToOne
 	@JsonIgnoreProperties("posts")
 	private Theme theme;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("posts")
+	private User user;
 
 	public Long getId() {
 		return id;
