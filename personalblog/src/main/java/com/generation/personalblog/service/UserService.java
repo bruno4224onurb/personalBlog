@@ -59,19 +59,19 @@ public class UserService {
 
 	public Optional<UserLogin> authUser(Optional<UserLogin> userLogin) {
         
-		var credentials = new UsernamePasswordAuthenticationToken(userLogin.get().getUser(), userLogin.get().getPassword());
+		var credentials = new UsernamePasswordAuthenticationToken(userLogin.get().getUserName(), userLogin.get().getPassword());
 		
 		Authentication authentication = authenticationManager.authenticate(credentials);
         
 		if (authentication.isAuthenticated()) {
 			
-			Optional<User> usuario = userRepository.findByUserName(userLogin.get().getUser());
+			Optional<User> usuario = userRepository.findByUserName(userLogin.get().getUserName());
 			
 			if (usuario.isPresent()) {
 			   userLogin.get().setId(usuario.get().getId());
 			   userLogin.get().setName(usuario.get().getName());
 			   userLogin.get().setUserPhoto(usuario.get().getUserPhoto());
-               userLogin.get().setToken(generateToken(userLogin.get().getUser()));
+               userLogin.get().setToken(generateToken(userLogin.get().getUserName()));
                userLogin.get().setPassword("");
 			   return userLogin;
 			

@@ -3,7 +3,7 @@ package com.generation.personalblog.model;
 public class UserLogin {
 	private Long id;
 	private String name;
-	private String user;
+	private String userName;
 	private String password;
 	private String userPhoto;
 	private String token;
@@ -24,12 +24,12 @@ public class UserLogin {
 		this.name = name;
 	}
 
-	public String getUser() {
-		return this.user;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {

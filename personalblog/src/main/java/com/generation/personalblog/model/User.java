@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,11 +23,12 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 
 	@NotNull(message = "The attribute name is mandatory!")
 	private String name;
 
+	@Schema(example = "email@email.com.br")
 	@NotNull(message = "The attribute user is mandatory!")
 	@Email(message = "The attribute user must be a valid email!")
 	private String userName;
@@ -42,12 +44,13 @@ public class User {
 	@JsonIgnoreProperties("user")
 	private List<Posts> posts;
 
+
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -62,7 +65,7 @@ public class User {
 		return userName;
 	}
 
-	public void setUser(String user) {
+	public void setUserName(String user) {
 		this.userName = user;
 	}
 
@@ -91,7 +94,7 @@ public class User {
 	}
 
 	public User(Long id, String name, String user, String password, String userPhoto) {
-		this.Id = id;
+		this.id = id;
 		this.name = name;
 		this.userName = user;
 		this.password = password;
