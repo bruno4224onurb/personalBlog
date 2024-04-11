@@ -15,48 +15,40 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    OpenAPI springBlogPessoalOpenAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("Personal blog project")
-                        .description("This is my personal blog server")
-                        .version("v0.0.1")
-                        .license(new License()
-                                .name("Gabriel Rodrigues")
-                                .url("https://www.apenasgabs.dev/"))
-                        .contact(new Contact()
-                                .name("Gabriel Rodrigues")
-                                .url("https://github.com/apenasgabs")
-                                .email("apenasgabs.dev@gmail.com")))
-                .externalDocs(new ExternalDocumentation()
-                        .description("Github")
-                        .url("https://github.com/apenasgabs/"));
-    }
-    @Bean
-    OpenApiCustomizer customerGlobalHeaderOpenApiCustomizer() {
+	@Bean
+	OpenAPI springPersonalBlogOpenAPI() {
+		return new OpenAPI()
+				.info(new Info().title("Personal Blog Project").description("Personal Blog Project - Generation Brazil")
+						.version("v0.0.1")
+						.license(new License().name("Generation Brazil").url("https://brazil.generation.org"))
+						.contact(new Contact().name("Bruno S. Franchi").url("https://github.com/bruno4224onurb")
+								.email("brunos.franchi@hotmail.com")))
+				.externalDocs(new ExternalDocumentation().description("Github")
+						.url("https://github.com/bruno4224onurb"));
+	}
 
-        return openApi -> {
-            openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation -> {
+	@Bean
+	OpenApiCustomizer customizerGlobalHeaderOpenApiCustomizer() {
+		return openApi -> {
+			openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation -> {
 
-                ApiResponses apiResponses = operation.getResponses();
+				ApiResponses apiResponses = operation.getResponses();
 
-                apiResponses.addApiResponse("200", createApiResponse("Success!"));
-                apiResponses.addApiResponse("201", createApiResponse("Object Persisted!"));
-                apiResponses.addApiResponse("204", createApiResponse("Object Deleted!"));
-                apiResponses.addApiResponse("400", createApiResponse("Request Error!"));
-                apiResponses.addApiResponse("401", createApiResponse("Unauthorized Access!"));
-                apiResponses.addApiResponse("403", createApiResponse("Forbidden Access!"));
-                apiResponses.addApiResponse("404", createApiResponse("Object Not Found!"));
-                apiResponses.addApiResponse("500", createApiResponse("Application Error!"));
+				apiResponses.addApiResponse("200", createApiResponse("Success!"));
+				apiResponses.addApiResponse("201", createApiResponse("Object Persisted!"));
+				apiResponses.addApiResponse("204", createApiResponse("Object Excluded!"));
+				apiResponses.addApiResponse("400", createApiResponse("Error in the request!"));
+				apiResponses.addApiResponse("401", createApiResponse("Access Denied!"));
+				apiResponses.addApiResponse("403", createApiResponse("Access Forbidden!"));
+				apiResponses.addApiResponse("404", createApiResponse("Object Not Found!"));
+				apiResponses.addApiResponse("500", createApiResponse("Error in application!"));
 
-            }));
-        };
-    }
+			}));
+		};
+	}
 
-    private ApiResponse createApiResponse(String message) {
+	private ApiResponse createApiResponse(String message) {
+		return new ApiResponse().description(message);
+	}
 
-        return new ApiResponse().description(message);
-
-    }
 }
